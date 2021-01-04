@@ -1,7 +1,9 @@
 
-This package is still under development.
+This package is still under development and must be seen as Alpha-version.
 Currenlty, it's missing the power-on button. This will come thbrough broadlink learn IR-function, but that function isn't available yet.
-Will follow once broadlik is running in meta
+Will follow once broadlik is running in meta.
+Second, we're using a Denon-noide in Node-RED that is developed outside our meta-team, where we donl;t have control over. 
+ This "external node" (or my Denon AVR) sometimes just doesn't open the network-connection, or disconnects the den on, showing Inactive on the node. This state probably isn't detected/handled correctly by the external node. Still looking in to this
 
 This package delivers support for Denon AVR's with older protocols (2012 and earlier) to be controlled wit a NEEO-remote through HTTP.
 
