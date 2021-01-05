@@ -433,7 +433,7 @@
       "id":"920bfa37.0c7b9",
       "type":"mqtt-broker",
       "name":"Spare neeo brain",
-      "broker":"192.168.0.31",
+      "broker":"127.0.0.1",
       "port":"1883",
       "clientid":"",
       "usetls":false,
