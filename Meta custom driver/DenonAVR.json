@@ -1,12 +1,12 @@
 {"name":"DenonAVR",
     "manufacturer":"Denon",
-    "version":3,
+    "version":4,
     "type":"AVRECEIVER",
     "variables":{
       "Volume":""    
     },
     "sliders":{
-      "VOLUME": {"label":"Volume", "unit" : "db", "listen" : "Volume", "evaldo":[{"test":true, "then":"__VOLUMECHANGE", "or":""}]}
+      "VOLUME": {"label":"Volume", "unit" : "db", "listen" : "Volume"}
   },    
     "buttons":{
       "POWER ON": {"label":"", "type":"http-get", "command":"DYNAMIK 'http://127.0.0.1:3000/irblaster/send_ir?code=sendir,1:1,1,38000,4,1,10,30,10,70,10,30,10,30,10,30,10,30,10,70,10,30,10,70,10,70,10,70,10,70,10,30,10,30,10,30,10,1655,10,30,10,70,10,30,10,30,10,30,10,70,10,30,10,70,10,30,10,30,10,30,10,30,10,70,10,70,10,70,10,1655'"},
@@ -18,15 +18,6 @@
        "CURSOR LEFT": {"label":"", "type":"static", "command":""},
        "CURSOR RIGHT": {"label":"", "type":"static", "command":""},
        "CURSOR ENTER": {"label":"", "type":"static", "command":""},
-       "PAGE UP": {"label":"", "type":"static", "command":""},
-       "PAGE DOWN": {"label":"", "type":"static", "command":""},
-       "OSD": {"label":"", "type":"static", "command":""},
-       "PLAY": {"label":"", "type":"static", "command":""},
-       "STOP": {"label":"", "type":"static", "command":""},
-       "LANGUAGE": {"label":"", "type":"static", "command":""},
-       "SUBTITLE": {"label":"", "type":"static", "command":""},
-       "PAUSE": {"label":"", "type":"static", "command":""},
-       "BACK": {"label":"", "type":"static", "command":""},
        "MENU": {"label":"", "type":"static", "command":""},
        "SELECT": {"label":"", "type":"static", "command":""},
        "PRESET UP": {"label":"", "type":"static", "command":""},
@@ -59,6 +50,8 @@
        "SUR:WIDE SCREEN": {"label":"", "type":"static", "command":""}, 
        "SUR:LEFT": {"label":"", "type":"static", "command":""}, 
        "SUR:RIGHT": {"label":"", "type":"static", "command":""},        
+       "INFO": {"label":"", "type":"static", "command":""},
+       "OPTION": {"label":"", "type":"static", "command":""},       
        "INPUT PHONO": {"label":"", "type":"static", "command":""},
        "INPUT CD": {"label":"", "type":"static", "command":""},
        "INPUT TUNER": {"label":"", "type":"static", "command":""},
@@ -77,6 +70,7 @@
        "INPUT iPod": {"label":"", "type":"static", "command":""},
        "INPUT GAME": {"label":"", "type":"static", "command":""},
        "INPUT TV/CBL": {"label":"", "type":"static", "command":""},
+       "INPUT TV": {"label":"", "type":"static", "command":""},
        "INPUT HDRADIO": {"label":"", "type":"static", "command":""},       
        "INPUT PANDORA": {"label":"", "type":"static", "command":""},
        "INPUT SIRIUSXM": {"label":"", "type":"static", "command":""},
@@ -103,7 +97,9 @@
        "INPUT QUICK3": {"label":"", "type":"static", "command":""}, 
        "INPUT QUICK4": {"label":"", "type":"static", "command":""}, 
        "INPUT QUICK5": {"label":"", "type":"static", "command":""},                      
-
+       "DYNVOL LIGHT": {"label":"", "type":"static", "command":""}, 
+       "DYNVOL MEDIUM": {"label":"", "type":"static", "command":""}, 
+       "DYNVOL DYNAMIC": {"label":"", "type":"static", "command":""}, 
        "RESO SC48P": {"label":"", "type":"static", "command":""}, 
        "RESO SC10I": {"label":"", "type":"static", "command":""}, 
        "RESO SC72P": {"label":"", "type":"static", "command":""}, 
@@ -134,12 +130,11 @@
        "ZONE 2ON": {"label":"", "type":"static", "command":""},        
        "ZONE 3OFF": {"label":"", "type":"static", "command":""},        
        "ZONE 3ON": {"label":"", "type":"static", "command":""},        
-       "__VOLUMECHANGE": {"label":"", "commandset": [
-              {"type":"mqtt",
-                "command":"{\"topic\":\"meta/DenonAVR/xx/SLIDER/VOLSLIDER $Volume\", \"message\":\"$Volume\"}"}]},
+       "DIMMER": {"label":"", "type":"static", "command":""},  
        "VOLUME UP": {"label":"", "type":"static", "command":""},
        "VOLUME DOWN": {"label":"", "type":"static", "command":""},
-       "MUTE TOGGLE": {"label":"", "type":"static", "command":""}
+       "MUTE OFF": {"label":"", "type":"static", "command":""},
+       "MUTE ON": {"label":"", "type":"static", "command":""}
     }
   }
 

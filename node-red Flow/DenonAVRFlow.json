@@ -1,15 +1,15 @@
 [
    {
-      "id":"4cd6264a.5af948",
+      "id":"4da7d783.603db8",
       "type":"tab",
       "label":"DenonAVR",
       "disabled":false,
       "info":""
    },
    {
-      "id":"955a60a5.a799b",
+      "id":"19cf3eda.409d59",
       "type":"debug",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"From Denon",
       "active":true,
       "tosidebar":true,
@@ -19,51 +19,53 @@
       "targetType":"full",
       "statusVal":"",
       "statusType":"auto",
-      "x":830,
-      "y":560,
+      "x":1130,
+      "y":60,
       "wires":[
          
       ]
    },
    {
-      "id":"eac53042.e7f448",
+      "id":"18addb61.93dcfd",
       "type":"mqtt in",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"MQTT Brain",
       "topic":"meta/DenonAVR/#",
       "qos":"2",
       "datatype":"auto",
       "broker":"920bfa37.0c7b9",
       "x":90,
-      "y":140,
+      "y":300,
       "wires":[
          [
-            "1e26046a.4564ac"
+            "b60e073f.09824",
+            "d4a4c427.3d3108"
          ]
       ]
    },
    {
-      "id":"1e26046a.4564ac",
+      "id":"b60e073f.09824",
       "type":"function",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"Split input",
-      "func":"var output = msg.topic.split(\"/\");\nvar name_meta = output[0];\nvar device = output[1];\nvar deviceid = output[2];\nvar command_type = output[3]; \nvar button = output[4];\nreturn {\n//      button: msg.topic.slice(32 , 99)\n        name_meta: output[0],\n        devicename: output[1],\n        deviceid: output[2],\n        command_type: output[3], \n        button: output[4]\n};",
+      "func":"// meta/DenonAVR/default/button/VOLUME DOWN : payload: Pressed\nvar output = msg.topic.split(\"/\");\nvar name_meta = output[0];\nvar device = output[1];\nvar deviceid = output[2];\nvar command_type = output[3]; \nvar button = output[4];\nreturn {\n//      button: msg.topic.slice(32 , 99)\n        name_meta: output[0],\n        devicename: output[1],\n        deviceid: output[2],\n        command_type: output[3], \n        button: output[4],\n        payload:msg.payload\n};",
       "outputs":1,
       "noerr":0,
       "initialize":"",
       "finalize":"",
-      "x":240,
-      "y":140,
+      "x":280,
+      "y":300,
       "wires":[
          [
-            "9a933e41.e0a858"
+            "4d5c2073.3a2fd8",
+            "19347c56.acd2e4"
          ]
       ]
    },
    {
-      "id":"9a933e41.e0a858",
+      "id":"4d5c2073.3a2fd8",
       "type":"switch",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"Switch input",
       "property":"button",
       "propertyType":"msg",
@@ -105,11 +107,6 @@
          },
          {
             "t":"cont",
-            "v":"CHANNEL",
-            "vt":"str"
-         },
-         {
-            "t":"cont",
             "v":"BACK",
             "vt":"str"
          },
@@ -147,13 +144,83 @@
             "t":"cont",
             "v":"PRESET",
             "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"VOLSLIDER",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"RESO ",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"PICT",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"TUNERFREQ",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"TUNERPRES",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"TUNERBAND",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"HDRADIOCH",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"HDRADIOPR",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"ZONE",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"MUTE",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"DIMMER",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"DYNVOL",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"INFO",
+            "vt":"str"
+         },
+         {
+            "t":"cont",
+            "v":"OPTION",
+            "vt":"str"
          }
       ],
       "checkall":"true",
       "repair":false,
-      "outputs":16,
+      "outputs":29,
       "x":430,
-      "y":140,
+      "y":300,
       "wires":[
          [
             
@@ -165,23 +232,19 @@
             
          ],
          [
-            "fd404655.eda1"
+            "f0994af5.c7256"
          ],
          [
             
          ],
          [
-            "4f36f73b.36a8"
+            "f9ee5b99.ae8978"
          ],
          [
-            "fab8a689.8587f"
+            "2f398988.04e6ee"
          ],
          [
-            "231a30b9.04d5b8",
-            "7f25a637.8d1158"
-         ],
-         [
-            "fab8a689.8587f"
+            "2f398988.04e6ee"
          ],
          [
             
@@ -190,45 +253,86 @@
             
          ],
          [
-            "7ec0150f.279f1c"
+            "d6557fcc.f531b"
          ],
          [
             
          ],
          [
-            "e453d2af.1a38b"
+            "a0292c4a.688be"
          ],
          [
-            "e0cc222b.6b7ee"
+            "34188862.c74b08"
          ],
          [
-            "7f25a637.8d1158"
+            "6eaf25c4.e5bca4"
+         ],
+         [
+            
+         ],
+         [
+            "84164d80.857448"
+         ],
+         [
+            "5c734b44.e6a204"
+         ],
+         [
+            "6bf60475.7d4a34"
+         ],
+         [
+            "b2b602d8.e1396"
+         ],
+         [
+            "a4eb828f.6f81b"
+         ],
+         [
+            "72a17801.3a901"
+         ],
+         [
+            "19bab9b7.a89a86"
+         ],
+         [
+            "410b5176.efedb8"
+         ],
+         [
+            "d6e9433b.69a8c8"
+         ],
+         [
+            "75a29a28.90b07c"
+         ],
+         [
+            "f95baae.a83e958"
+         ],
+         [
+            "f4b89357.144e3"
+         ],
+         [
+            "4d9d6572.685a6c"
          ]
       ]
    },
    {
-      "id":"4f36f73b.36a8",
+      "id":"f9ee5b99.ae8978",
       "type":"function",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"SetVolume ",
-      "func":"\nvar output = msg.button.split(\" \");\nvar SetVol = \"MV\"+output[1];\n\n\n\nreturn  {\n    \"topic\": SetVol,\n        \"payload\" : 1\n}\n\n\nreturn  {\n    payload: SetVol\n}\n",
+      "func":"\nvar output = msg.button.split(\" \");\nvar MyPayload = msg.payload\nvar Percentage = (!isNaN(MyPayload) && isFinite(MyPayload))\n\nif (Percentage) {\n    SetVol = \"MV\"+MyPayload\n    }\nelse\n    var SetVol = \"MV\"+output[1];\n\n\n\nreturn  {\n    \"topic\": SetVol,\"payload\" : \"\"\n}\n\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
       "finalize":"",
-      "x":630,
-      "y":127,
+      "x":670,
+      "y":80,
       "wires":[
          [
-            "20e3e7ea.3bbb8",
-            "12766499.fd9ebb"
+            "9f9f351b.1ef9e"
          ]
       ]
    },
    {
-      "id":"12766499.fd9ebb",
+      "id":"6548dbd5.8b439c",
       "type":"debug",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"ToDenon",
       "active":true,
       "tosidebar":true,
@@ -238,178 +342,509 @@
       "targetType":"full",
       "statusVal":"",
       "statusType":"auto",
-      "x":960,
-      "y":160,
+      "x":1060,
+      "y":220,
       "wires":[
          
       ]
    },
    {
-      "id":"231a30b9.04d5b8",
+      "id":"d6557fcc.f531b",
       "type":"function",
-      "z":"4cd6264a.5af948",
-      "name":"Channel",
-      "func":"\nvar output = msg.button.split(\" \");\nvar SetVol = \"MV\"+output[1];\nSetVol = output[1];\nreturn  {\n    \"topic\": \"MV\", payload: SetVol\n//        \"payload\" : \"\"\n}",
-      "outputs":1,
-      "noerr":0,
-      "initialize":"",
-      "finalize":"",
-      "x":620,
-      "y":200,
-      "wires":[
-         [
-            "12766499.fd9ebb",
-            "20e3e7ea.3bbb8"
-         ]
-      ]
-   },
-   {
-      "id":"7ec0150f.279f1c",
-      "type":"function",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"Power",
       "func":"\nvar output = msg.button.split(\" \");\nvar SetPower = \"\";\nif (output[1] == \"ON\") \n    SetPower = \"PWON\"\nelse\n    SetPower = \"PWSTANDBY\"\nreturn  {\n    \"topic\": SetPower, payload: \"\",setpower:output[1]\n}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
       "finalize":"",
-      "x":610,
-      "y":240,
+      "x":650,
+      "y":153,
       "wires":[
          [
-            "12766499.fd9ebb",
-            "20e3e7ea.3bbb8"
+            "9f9f351b.1ef9e"
          ]
       ]
    },
    {
-      "id":"fd404655.eda1",
+      "id":"f0994af5.c7256",
       "type":"function",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"Cursor",
       "func":"MyDirection=msg.button.slice(7,99)\nMyDirection = MyDirection.toLowerCase()\nvar MyCommand = \"MN\" \n\n\nif (MyDirection == \"enter\" )  \n    MyCommand = \"MNENT\"\nelse\nif (MyDirection == \"down\" ) \n    MyCommand = \"MNCDN\"\nelse\nif (MyDirection == \"up\" ) \n    MyCommand = \"MNCUP\"\nelse\nif (MyDirection == \"left\" ) \n    MyCommand = \"MNCLT\"\nelse\nif (MyDirection == \"right\" ) \n    MyCommand = \"MNCRT\"\n\n\nreturn {payload: \"\", topic:  MyCommand, MyCommand: MyDirection}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
       "finalize":"",
-      "x":610,
-      "y":100,
+      "x":650,
+      "y":40,
       "wires":[
          [
-            "12766499.fd9ebb",
-            "20e3e7ea.3bbb8"
+            "9f9f351b.1ef9e"
          ]
       ]
    },
    {
-      "id":"fab8a689.8587f",
+      "id":"2f398988.04e6ee",
       "type":"function",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"Menu",
       "func":"var MyCommand = \"MN\" \n\n\nif (msg.button == \"BACK\" )  \n    MyCommand = \"MNMEN OFF\"\nelse\n    MyCommand = \"MNMEN ON\"\nreturn {topic: MyCommand,payload: \"\"}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
       "finalize":"",
-      "x":610,
-      "y":160,
+      "x":650,
+      "y":120,
       "wires":[
          [
-            "12766499.fd9ebb",
-            "20e3e7ea.3bbb8"
+            "9f9f351b.1ef9e"
          ]
       ]
    },
    {
-      "id":"e453d2af.1a38b",
+      "id":"a0292c4a.688be",
       "type":"function",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"Input",
-      "func":"MySource=msg.button.slice(6,99)\nMySource = MySource.toLowerCase()\nvar MyCommand = \"\" \n\nif (MySource == \"tuner\") \n   MyCommand = \"SITUNER\"\nelse\nif (MySource == \"tv\") \n   MyCommand = \"SITV/CBL\"\n else\n if (MySource == \"phono\") \n   MyCommand = \"SIPHONO\"\n else\n if (MySource == \"cd\") \n   MyCommand = \"SICD\"\n else\n if (MySource == \"dvd\") \n   MyCommand = \"SIDVD\"\n else\n if (MySource == \"hdp\") \n   MyCommand = \"SIHDP\"\n else\n if (MySource == \"sat\") \n   MyCommand = \"SISAT\"\n else\n if (MySource == \"vcr\") \n   MyCommand = \"SIVCR\"\n else\n  if (MySource == \"dvr\") \n   MyCommand = \"SIDVR\"\n else\n  if (MySource == \"v.aux\") \n   MyCommand = \"SIV.AUX\"\n else\n  if (MySource == \"net\") \n   MyCommand = \"SINET\"\n else\n  if (MySource == \"xm\") \n   MyCommand = \"SIXM\"\n else\n  if (MySource == \"ipod\") \n   MyCommand = \"SIIPOD\"\n else\n   return null\n   \nreturn {payload: \"\", topic: MyCommand, mypart: MySource}\n",
+      "func":"MySource=msg.button.slice(6,99)\nMySource = MySource.toLowerCase()\nvar MyCommand = \"\" \n\nif (MySource == \"tuner\") \n   MyCommand = \"SITUNER\"\nelse\nif (MySource == \"bd\") \n   MyCommand = \"SIBD\"\nelse\n if (MySource == \"phono\") \n   MyCommand = \"SIPHONO\"\n else\n if (MySource == \"cd\") \n   MyCommand = \"SICD\"\n else\n if (MySource == \"dvd\") \n   MyCommand = \"SIDVD\"\n else\n if (MySource == \"hdp\") \n   MyCommand = \"SIHDP\"\n else\n if (MySource == \"sat\") \n   MyCommand = \"SISAT\"\n else\n if (MySource == \"vcr\") \n   MyCommand = \"SIVCR\"\n else\n  if (MySource == \"dvr\") \n   MyCommand = \"SIDVR\"\n else\n  if (MySource == \"v.aux\") \n   MyCommand = \"SIV.AUX\"\n else\n  if (MySource == \"net\") \n   MyCommand = \"SINET\"\n else\n  if (MySource == \"xm\") \n   MyCommand = \"SIXM\"\n else\n  if (MySource == \"ipod\") \n   MyCommand = \"SIIPOD\"\n else\n      MyCommand = \"SI\"+MySource.toUpperCase()\n   \nreturn {payload: \"\", topic: MyCommand, mypart: MySource}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
       "finalize":"",
-      "x":610,
-      "y":280,
+      "x":650,
+      "y":193,
       "wires":[
          [
-            "12766499.fd9ebb",
-            "20e3e7ea.3bbb8"
+            "9f9f351b.1ef9e"
          ]
       ]
    },
    {
-      "id":"20e3e7ea.3bbb8",
-      "type":"denon-out",
-      "z":"4cd6264a.5af948",
-      "name":"Denon in",
-      "controller":"2092045d.79fbb4",
-      "unit_number":"1",
-      "output":"1",
-      "denoncommand":"",
-      "x":940,
-      "y":400,
-      "wires":[
-         
-      ]
-   },
-   {
-      "id":"fb030723.0287d",
-      "type":"denon-in",
-      "z":"4cd6264a.5af948",
-      "name":"Denon-out",
-      "controller":"2092045d.79fbb4",
-      "x":600,
-      "y":560,
-      "wires":[
-         [
-            "955a60a5.a799b"
-         ]
-      ]
-   },
-   {
-      "id":"e0cc222b.6b7ee",
+      "id":"34188862.c74b08",
       "type":"function",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"Surround",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\":\");\nvar MyMode = MyButton[1].toUpperCase()\nvar MyCommand = \"MS\"+MyMode \n\n\nreturn  {\n    \"topic\": MyCommand,payload: \"\"\n}\n\n\nreturn {payload: MyCommand\n}\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\":\");\nvar MyMode = MyButton[1].toUpperCase()\n\nif (MyMode==\"DOLBYD\")\n    MyMode = \"DOLBY DIGITAL\"\nelse\nif (MyMode==\"DTS-SURR\")\n    MyMode = \"DTS SURROUND\"\n\nvar MyCommand = \"MS\"+MyMode \n\n\nreturn  {\n    \"topic\": MyCommand,payload: \"\"\n}\n\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
       "finalize":"",
-      "x":621,
-      "y":322,
+      "x":661,
+      "y":235,
       "wires":[
          [
-            "12766499.fd9ebb",
-            "20e3e7ea.3bbb8"
+            "9f9f351b.1ef9e"
          ]
       ]
    },
    {
-      "id":"7f25a637.8d1158",
+      "id":"6eaf25c4.e5bca4",
       "type":"function",
-      "z":"4cd6264a.5af948",
+      "z":"4da7d783.603db8",
       "name":"Preset",
       "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\nvar MyCommand = \"TPAN\"+MyMode \n\n\nreturn {payload: MyCommand\n}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
       "finalize":"",
-      "x":610,
-      "y":360,
+      "x":650,
+      "y":273,
       "wires":[
          [
-            "12766499.fd9ebb",
-            "20e3e7ea.3bbb8"
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"ea8c26d9.bde66",
+      "type":"denon-out",
+      "z":"4da7d783.603db8",
+      "name":"Denon in",
+      "controller":"2092045d.79fbb4",
+      "unit_number":"1",
+      "output":"1",
+      "denoncommand":"",
+      "x":1060,
+      "y":300,
+      "wires":[
+         
+      ]
+   },
+   {
+      "id":"5a918e12.da947",
+      "type":"denon-in",
+      "z":"4da7d783.603db8",
+      "name":"Denon-out",
+      "controller":"2092045d.79fbb4",
+      "x":960,
+      "y":60,
+      "wires":[
+         [
+            "19cf3eda.409d59"
+         ]
+      ]
+   },
+   {
+      "id":"d4a4c427.3d3108",
+      "type":"debug",
+      "z":"4da7d783.603db8",
+      "name":"Meta-in",
+      "active":true,
+      "tosidebar":true,
+      "console":false,
+      "tostatus":false,
+      "complete":"true",
+      "targetType":"full",
+      "statusVal":"",
+      "statusType":"auto",
+      "x":270,
+      "y":480,
+      "wires":[
+         
+      ]
+   },
+   {
+      "id":"84164d80.857448",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Resolution",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\nvar MyCommand = \"VS\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":670,
+      "y":313,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"9f9f351b.1ef9e",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"",
+      "func":"\nreturn msg;",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":870,
+      "y":300,
+      "wires":[
+         [
+            "ea8c26d9.bde66",
+            "6548dbd5.8b439c"
+         ]
+      ]
+   },
+   {
+      "id":"5c734b44.e6a204",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Picture",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\nif (MyMode==\"Standard\")\n    MyMode=\"std\"\nelse\nif (MyMode==\"Movie\")\n    MyMode=\"MOV\"\nelse\nif (MyMode==\"Vivid\")\n    MyMode=\"VVD\"\nelse\nif (MyMode==\"Stream\")\n    MyMode=\"STM\"\nelse\nif (MyMode==\"Custom\")\n    MyMode=\"CTM\"\nelse\nif (MyMode==\"ISF Day\")\n    MyMode=\"DAY\"\nelse\nif (MyMode==\"ISF NIGHT\")\n    MyMode=\"NGT\"\n\nvar MyCommand = \"PV\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\nSTD\nMOV\nVVD\nSTM\nCTM\nDAY\nNGT",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":660,
+      "y":353,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"6bf60475.7d4a34",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Tuner FREQ",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TFAN\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":670,
+      "y":393,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"b2b602d8.e1396",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Tuner Preset",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TPAN\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":670,
+      "y":433,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"72a17801.3a901",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Tuner HD Channel",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TFHD\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":690,
+      "y":593,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"19bab9b7.a89a86",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Tuner HD Preset",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TPHD\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":680,
+      "y":551,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"a4eb828f.6f81b",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Tuner Band",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TMAN\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":670,
+      "y":473,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"af93eb09.8df4a8",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Tuner HD Preset",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TPHD\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":680,
+      "y":513,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"410b5176.efedb8",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Zone",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"Z\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":650,
+      "y":640,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"19347c56.acd2e4",
+      "type":"debug",
+      "z":"4da7d783.603db8",
+      "name":"split input",
+      "active":true,
+      "tosidebar":true,
+      "console":false,
+      "tostatus":false,
+      "complete":"true",
+      "targetType":"full",
+      "statusVal":"",
+      "statusType":"auto",
+      "x":290,
+      "y":400,
+      "wires":[
+         
+      ]
+   },
+   {
+      "id":"2d2f33bb.2f6f2c",
+      "type":"inject",
+      "z":"4da7d783.603db8",
+      "name":"",
+      "props":[
+         {
+            "p":"payload"
+         },
+         {
+            "p":"topic",
+            "vt":"str"
+         }
+      ],
+      "repeat":"",
+      "crontab":"",
+      "once":false,
+      "onceDelay":0.1,
+      "topic":"",
+      "payload":"",
+      "payloadType":"date",
+      "x":340,
+      "y":880,
+      "wires":[
+         [
+            "f24456f4.9cdb1"
+         ]
+      ]
+   },
+   {
+      "id":"75a29a28.90b07c",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Dimmer",
+      "func":"\nreturn  {\n    \"topic\": \"DIM SEL\", payload: \"\"\n}",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":660,
+      "y":720,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"d6e9433b.69a8c8",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"MUTE",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"MU\"+ MyMode\n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":650,
+      "y":680,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"f24456f4.9cdb1",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Test",
+      "func":"\nreturn  {\n    \"topic\": \"DIM SEL\", payload: \"\"\n}",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":650,
+      "y":880,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"f95baae.a83e958",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"DYN Volume",
+      "func":"var MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\nvar SetMode = \"\"\n\nif (MyMode == \"HEAVY\")\n    SetMode = \"HEV\"\n    else\n    if (MyMode == \"MEDIUM\")\n        SetMode = \"MED\"\n    else\n        SetMode = \"LIT\"\nreturn  {\n    \"topic\": \"DYNVOL \"+SetMode , payload: \"\"\n}",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":670,
+      "y":760,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"f4b89357.144e3",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"INFO",
+      "func":"\nreturn  {\n    \"topic\": \"MNINF\", payload: \"\"\n}",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":650,
+      "y":800,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"4d9d6572.685a6c",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"OPTION",
+      "func":"\nreturn  {\n    \"topic\": \"MNOPT\", payload: \"\"\n}",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":660,
+      "y":840,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
          ]
       ]
    },
    {
       "id":"920bfa37.0c7b9",
       "type":"mqtt-broker",
-      "name":"Spare neeo brain",
+      "name":"Prod neeo brain",
       "broker":"127.0.0.1",
       "port":"1883",
       "clientid":"",
@@ -430,6 +865,7 @@
    {
       "id":"2092045d.79fbb4",
       "type":"denon-controller",
+      "d":true,
       "name":"Denon-Living",
       "host":"192.168.0.28",
       "port":"23"
