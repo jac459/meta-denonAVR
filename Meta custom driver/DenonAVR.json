@@ -1,6 +1,6 @@
 {"name":"DenonAVR",
     "manufacturer":"Denon",
-    "version":4,
+    "version":5,
     "type":"AVRECEIVER",
     "variables":{
       "Volume":""    
@@ -99,7 +99,7 @@
        "INPUT QUICK5": {"label":"", "type":"static", "command":""},                      
        "DYNVOL LIGHT": {"label":"", "type":"static", "command":""}, 
        "DYNVOL MEDIUM": {"label":"", "type":"static", "command":""}, 
-       "DYNVOL DYNAMIC": {"label":"", "type":"static", "command":""}, 
+       "DYNVOL HEAVY": {"label":"", "type":"static", "command":""}, 
        "RESO SC48P": {"label":"", "type":"static", "command":""}, 
        "RESO SC10I": {"label":"", "type":"static", "command":""}, 
        "RESO SC72P": {"label":"", "type":"static", "command":""}, 
