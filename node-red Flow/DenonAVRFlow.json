@@ -461,7 +461,7 @@
       "type":"denon-out",
       "z":"4da7d783.603db8",
       "name":"Denon in",
-      "controller":"2092045d.79fbb4",
+      "controller":"6c3d7e97.97d678",
       "unit_number":"1",
       "output":"1",
       "denoncommand":"",
@@ -476,8 +476,8 @@
       "type":"denon-in",
       "z":"4da7d783.603db8",
       "name":"Denon-out",
-      "controller":"2092045d.79fbb4",
-      "x":960,
+      "controller":"6c3d7e97.97d678",
+      "x":920,
       "y":60,
       "wires":[
          [
@@ -774,7 +774,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Test",
-      "func":"\nreturn  {\n    \"topic\": \"DIM SEL\", payload: \"\"\n}",
+      "func":"\nreturn  {\n    \"topic\": \"SIDVD\", payload: \"\"\n}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -863,11 +863,10 @@
       "willPayload":""
    },
    {
-      "id":"2092045d.79fbb4",
+      "id":"6c3d7e97.97d678",
       "type":"denon-controller",
-      "d":true,
-      "name":"Denon-Living",
-      "host":"192.168.0.28",
+      "name":"",
+      "host":"192.168.1.130",
       "port":"23"
    }
 ]
