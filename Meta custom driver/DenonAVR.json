@@ -1,6 +1,6 @@
 {"name":"DenonAVR",
     "manufacturer":"Denon",
-    "version":5,
+    "version":6,
     "type":"AVRECEIVER",
     "variables":{
       "Volume":""    
@@ -9,7 +9,7 @@
       "VOLUME": {"label":"Volume", "unit" : "db", "listen" : "Volume"}
   },    
     "buttons":{
-      "POWER ON": {"label":"", "type":"http-get", "command":"DYNAMIK 'http://127.0.0.1:3000/irblaster/send_ir?code=sendir,1:1,1,38000,4,1,10,30,10,70,10,30,10,30,10,30,10,30,10,70,10,30,10,70,10,70,10,70,10,70,10,30,10,30,10,30,10,1655,10,30,10,70,10,30,10,30,10,30,10,70,10,30,10,70,10,30,10,30,10,30,10,30,10,70,10,70,10,70,10,1655'"},
+      "POWER ON": {"label":"", "type":"static", "command":""},
       "POWER OFF": {"label":"", "type":"static", "command":""},
        "CHANNEL UP": {"label":"", "type":"static", "command":""},
        "CHANNEL DOWN": {"label":"", "type":"static", "command":""},
@@ -133,8 +133,7 @@
        "DIMMER": {"label":"", "type":"static", "command":""},  
        "VOLUME UP": {"label":"", "type":"static", "command":""},
        "VOLUME DOWN": {"label":"", "type":"static", "command":""},
-       "MUTE OFF": {"label":"", "type":"static", "command":""},
-       "MUTE ON": {"label":"", "type":"static", "command":""}
+       "MUTE": {"label":"", "type":"static", "command":""}
     }
   }
 

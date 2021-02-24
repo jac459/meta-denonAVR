@@ -28,7 +28,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Split input",
-      "func":"// meta/DenonAVR/default/button/VOLUME DOWN : payload: Pressed\nvar output = msg.topic.split(\"/\");\nvar name_meta = output[0];\nvar device = output[1];\nvar deviceid = output[2];\nvar command_type = output[3]; \nvar button = output[4];\nreturn {\n//      button: msg.topic.slice(32 , 99)\n        name_meta: output[0],\n        devicename: output[1],\n        deviceid: output[2],\n        command_type: output[3], \n        button: output[4],\n        payload:msg.payload\n};",
+      "func":"// meta/DenonAVR/default/button/VOLUME DOWN : payload: Pressed\nvar output = msg.topic.split(\"/\");\nvar name_meta = output[0];\nvar device = output[1];\nvar OrgUrl = output[2];\nvar command_type = output[3]; \nvar button = output[4];\n\n\nvar ipdata \nvar  ip; \nvar port \nif (OrgUrl == \"default\") // No auto discovery\n   {ip = \"192.168.1.130\";\n   port = \"23\";\n   }\nelse\n    {ipdate = OrgUrl.split(\":\");\n    ip = ipdata[0];\n    port = ipdata[1];\n    }\n\nflow.set(\"ThisIP\",ip); // and save the IP-address; we'll need it for a toggle \nflow.set(\"ThisPort\",port); // and save the port; we'll need it for a toggle \nreturn {\n        name_meta: output[0],\n        devicename: output[1],\n        deviceid: output[2],\n        command_type: output[3], \n        button: output[4],\n        payload:msg.payload,\n        ip: ip, port: port, host: ip\n};",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -126,11 +126,6 @@
          },
          {
             "t":"cont",
-            "v":"VOLSLIDER",
-            "vt":"str"
-         },
-         {
-            "t":"cont",
             "v":"RESO ",
             "vt":"str"
          },
@@ -197,7 +192,7 @@
       ],
       "checkall":"true",
       "repair":false,
-      "outputs":29,
+      "outputs":28,
       "x":430,
       "y":300,
       "wires":[
@@ -247,9 +242,6 @@
             "6eaf25c4.e5bca4"
          ],
          [
-            
-         ],
-         [
             "84164d80.857448"
          ],
          [
@@ -274,7 +266,7 @@
             "410b5176.efedb8"
          ],
          [
-            "d6e9433b.69a8c8"
+            "9d02f5ba.f07898"
          ],
          [
             "75a29a28.90b07c"
@@ -295,7 +287,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"SetVolume ",
-      "func":"\nvar output = msg.button.split(\" \");\nvar MyPayload = msg.payload\nvar Percentage = (!isNaN(MyPayload) && isFinite(MyPayload))\n\nif (Percentage) {\n    SetVol = \"MV\"+MyPayload\n    }\nelse\n    var SetVol = \"MV\"+output[1];\n\n\n\nreturn  {\n    \"topic\": SetVol,\"payload\" : \"\"\n}\n\n",
+      "func":"\nvar output = msg.button.split(\" \");\nvar MyPayload = msg.payload\nvar Percentage = (!isNaN(MyPayload) && isFinite(MyPayload))\n\nif (Percentage) {\n    SetVol = \"MV\"+MyPayload\n    }\nelse\n    var SetVol = \"MV\"+output[1];\n\n\n\nreturn  {\n    payload: SetVol\n}\n\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -313,7 +305,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Power",
-      "func":"\nvar output = msg.button.split(\" \");\nvar SetPower = \"\";\nif (output[1] == \"ON\") \n    SetPower = \"PWON\"\nelse\n    SetPower = \"PWSTANDBY\"\nreturn  {\n    \"topic\": SetPower, payload: \"\",setpower:output[1]\n}",
+      "func":"\nvar output = msg.button.split(\" \");\nvar SetPower = \"\";\nif (output[1] == \"ON\") \n    SetPower = \"PWON\"\nelse\n    SetPower = \"PWSTANDBY\"\nreturn  {\n    payload: SetPower\n}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -331,7 +323,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Cursor",
-      "func":"MyDirection=msg.button.slice(7,99)\nMyDirection = MyDirection.toLowerCase()\nvar MyCommand = \"MN\" \n\n\nif (MyDirection == \"enter\" )  \n    MyCommand = \"MNENT\"\nelse\nif (MyDirection == \"down\" ) \n    MyCommand = \"MNCDN\"\nelse\nif (MyDirection == \"up\" ) \n    MyCommand = \"MNCUP\"\nelse\nif (MyDirection == \"left\" ) \n    MyCommand = \"MNCLT\"\nelse\nif (MyDirection == \"right\" ) \n    MyCommand = \"MNCRT\"\n\n\nreturn {payload: \"\", topic:  MyCommand, MyCommand: MyDirection}\n",
+      "func":"MyDirection=msg.button.slice(7,99)\nMyDirection = MyDirection.toLowerCase()\nvar MyCommand = \"MN\" \n\n\nif (MyDirection == \"enter\" )  \n    MyCommand = \"MNENT\"\nelse\nif (MyDirection == \"down\" ) \n    MyCommand = \"MNCDN\"\nelse\nif (MyDirection == \"up\" ) \n    MyCommand = \"MNCUP\"\nelse\nif (MyDirection == \"left\" ) \n    MyCommand = \"MNCLT\"\nelse\nif (MyDirection == \"right\" ) \n    MyCommand = \"MNCRT\"\n\n\nreturn {payload:  MyCommand, MyCommand: MyDirection}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -349,7 +341,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Menu",
-      "func":"var MyCommand = \"MN\" \n\n\nif (msg.button == \"BACK\" )  \n    MyCommand = \"MNRTN\"\nelse\n    MyCommand = \"MNMEN ON\"\nreturn {topic: MyCommand,payload: \"\"}",
+      "func":"var MyCommand = \"MN\" \n\n\nif (msg.button == \"BACK\" )  \n    MyCommand = \"MNRTN\"\nelse\n    MyCommand = \"MNMEN ON\"\nreturn {payload: MyCommand,payload: \"\"}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -367,7 +359,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Input",
-      "func":"MySource=msg.button.slice(6,99)\nMySource = MySource.toLowerCase()\nvar MyCommand = \"\" \n\nif (MySource == \"tuner\") \n   MyCommand = \"SITUNER\"\nelse\nif (MySource == \"bd\") \n   MyCommand = \"SIBD\"\nelse\n if (MySource == \"phono\") \n   MyCommand = \"SIPHONO\"\n else\n if (MySource == \"cd\") \n   MyCommand = \"SICD\"\n else\n if (MySource == \"dvd\") \n   MyCommand = \"SIDVD\"\n else\n if (MySource == \"hdp\") \n   MyCommand = \"SIHDP\"\n else\n if (MySource == \"sat\") \n   MyCommand = \"SISAT\"\n else\n if (MySource == \"vcr\") \n   MyCommand = \"SIVCR\"\n else\n  if (MySource == \"dvr\") \n   MyCommand = \"SIDVR\"\n else\n  if (MySource == \"v.aux\") \n   MyCommand = \"SIV.AUX\"\n else\n  if (MySource == \"net\") \n   MyCommand = \"SINET\"\n else\n  if (MySource == \"xm\") \n   MyCommand = \"SIXM\"\n else\n  if (MySource == \"ipod\") \n   MyCommand = \"SIIPOD\"\n else\n      MyCommand = \"SI\"+MySource.toUpperCase()\n   \nreturn {payload: \"\", topic: MyCommand, mypart: MySource}\n",
+      "func":"MySource=msg.button.slice(6,99)\nMySource = MySource.toLowerCase()\nvar MyCommand = \"\" \n\nif (MySource == \"tuner\") \n   MyCommand = \"SITUNER\"\nelse\nif (MySource == \"bd\") \n   MyCommand = \"SIBD\"\nelse\n if (MySource == \"phono\") \n   MyCommand = \"SIPHONO\"\n else\n if (MySource == \"cd\") \n   MyCommand = \"SICD\"\n else\n if (MySource == \"dvd\") \n   MyCommand = \"SIDVD\"\n else\n if (MySource == \"hdp\") \n   MyCommand = \"SIHDP\"\n else\n if (MySource == \"sat\") \n   MyCommand = \"SISAT\"\n else\n if (MySource == \"vcr\") \n   MyCommand = \"SIVCR\"\n else\n  if (MySource == \"dvr\") \n   MyCommand = \"SIDVR\"\n else\n  if (MySource == \"v.aux\") \n   MyCommand = \"SIV.AUX\"\n else\n  if (MySource == \"net\") \n   MyCommand = \"SINET\"\n else\n  if (MySource == \"xm\") \n   MyCommand = \"SIXM\"\n else\n  if (MySource == \"ipod\") \n   MyCommand = \"SIIPOD\"\n else\n      MyCommand = \"SI\"+MySource.toUpperCase()\n   \nreturn {payload: MyCommand, mypart: MySource}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -385,7 +377,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Surround",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\":\");\nvar MyMode = MyButton[1].toUpperCase()\n\nif (MyMode==\"DOLBYD\")\n    MyMode = \"DOLBY DIGITAL\"\nelse\nif (MyMode==\"DTS-SURR\")\n    MyMode = \"DTS SURROUND\"\n\nvar MyCommand = \"MS\"+MyMode \n\n\nreturn  {\n    \"topic\": MyCommand,payload: \"\"\n}\n\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\":\");\nvar MyMode = MyButton[1].toUpperCase()\n\nif (MyMode==\"DOLBYD\")\n    MyMode = \"DOLBY DIGITAL\"\nelse\nif (MyMode==\"DTS-SURR\")\n    MyMode = \"DTS SURROUND\"\n\nvar MyCommand = \"MS\"+MyMode \n\n\nreturn  {\n    payload: MyCommand,payload: \"\"\n}\n\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -417,26 +409,11 @@
       ]
    },
    {
-      "id":"ea8c26d9.bde66",
-      "type":"denon-out",
-      "z":"4da7d783.603db8",
-      "name":"Denon in",
-      "controller":"6c3d7e97.97d678",
-      "unit_number":"1",
-      "output":"1",
-      "denoncommand":"",
-      "x":1060,
-      "y":300,
-      "wires":[
-         
-      ]
-   },
-   {
       "id":"84164d80.857448",
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Resolution",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\nvar MyCommand = \"VS\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\nvar MyCommand = \"VS\"+MyMode \n\nreturn {\n    payload: MyCommand}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -453,17 +430,17 @@
       "id":"9f9f351b.1ef9e",
       "type":"function",
       "z":"4da7d783.603db8",
-      "name":"",
-      "func":"\nreturn msg;",
+      "name":"Prepare send",
+      "func":"var theip = msg.ip;\n\nvar ThisIP =flow.get(\"ThisIP\") || 0;\nvar ThisPort =flow.get(\"ThisPort\") || 0;\nvar MyPayload = msg.payload\nreturn  {payload: MyPayload+\"\\r\",\n host: ThisIP, port:ThisPort,theip:theip} ",
       "outputs":1,
       "noerr":0,
       "initialize":"",
       "finalize":"",
-      "x":870,
+      "x":880,
       "y":300,
       "wires":[
          [
-            "ea8c26d9.bde66"
+            "49a63dc0.670aac"
          ]
       ]
    },
@@ -472,7 +449,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Picture",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\nif (MyMode==\"Standard\")\n    MyMode=\"std\"\nelse\nif (MyMode==\"Movie\")\n    MyMode=\"MOV\"\nelse\nif (MyMode==\"Vivid\")\n    MyMode=\"VVD\"\nelse\nif (MyMode==\"Stream\")\n    MyMode=\"STM\"\nelse\nif (MyMode==\"Custom\")\n    MyMode=\"CTM\"\nelse\nif (MyMode==\"ISF Day\")\n    MyMode=\"DAY\"\nelse\nif (MyMode==\"ISF NIGHT\")\n    MyMode=\"NGT\"\n\nvar MyCommand = \"PV\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\nSTD\nMOV\nVVD\nSTM\nCTM\nDAY\nNGT",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\nif (MyMode==\"Standard\")\n    MyMode=\"std\"\nelse\nif (MyMode==\"Movie\")\n    MyMode=\"MOV\"\nelse\nif (MyMode==\"Vivid\")\n    MyMode=\"VVD\"\nelse\nif (MyMode==\"Stream\")\n    MyMode=\"STM\"\nelse\nif (MyMode==\"Custom\")\n    MyMode=\"CTM\"\nelse\nif (MyMode==\"ISF Day\")\n    MyMode=\"DAY\"\nelse\nif (MyMode==\"ISF NIGHT\")\n    MyMode=\"NGT\"\n\nvar MyCommand = \"PV\"+MyMode \n\nreturn {\n    payload: MyCommand}\nSTD\nMOV\nVVD\nSTM\nCTM\nDAY\nNGT",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -490,7 +467,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Tuner FREQ",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TFAN\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TFAN\"+MyMode \n\nreturn {\n   payload: MyCommand}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -508,7 +485,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Tuner Preset",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TPAN\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TPAN\"+MyMode \n\nreturn {\n    payload: MyCommand}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -526,7 +503,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Tuner HD Channel",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TFHD\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TFHD\"+MyMode \n\nreturn {    payload: MyCommand}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -544,7 +521,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Tuner HD Preset",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TPHD\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TPHD\"+MyMode \n\nreturn {\n        payload: MyCommand\n}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -562,7 +539,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Tuner Band",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TMAN\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TMAN\"+MyMode \n\nreturn {\n    payload: MyCommand}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -580,7 +557,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Tuner HD Preset",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TPHD\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TPHD\"+MyMode \n\nreturn {\n    payload: MyCommand}\n\n\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -598,7 +575,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Zone",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"Z\"+MyMode \n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"Z\"+MyMode \n\nreturn {\n    payload: MyCommand}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -615,11 +592,8 @@
       "id":"2d2f33bb.2f6f2c",
       "type":"inject",
       "z":"4da7d783.603db8",
-      "name":"",
+      "name":"manual request",
       "props":[
-         {
-            "p":"payload"
-         },
          {
             "p":"topic",
             "vt":"str"
@@ -629,14 +603,13 @@
       "crontab":"",
       "once":false,
       "onceDelay":0.1,
-      "topic":"",
-      "payload":"",
-      "payloadType":"date",
-      "x":340,
-      "y":880,
+      "topic":"meta/DenonAVR/192.168.0.28:23/button/MUTE",
+      "payloadType":"str",
+      "x":160,
+      "y":420,
       "wires":[
          [
-            "f24456f4.9cdb1"
+            "b60e073f.09824"
          ]
       ]
    },
@@ -645,7 +618,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Dimmer",
-      "func":"\nreturn  {\n    \"topic\": \"DIM SEL\", payload: \"\"\n}",
+      "func":"\nreturn  {\n    payload: \"DIM SEL\"}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -659,47 +632,11 @@
       ]
    },
    {
-      "id":"d6e9433b.69a8c8",
-      "type":"function",
-      "z":"4da7d783.603db8",
-      "name":"MUTE",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"MU\"+ MyMode\n\nreturn {\n    \"topic\": MyCommand,payload: \"\"}\n",
-      "outputs":1,
-      "noerr":0,
-      "initialize":"",
-      "finalize":"",
-      "x":650,
-      "y":680,
-      "wires":[
-         [
-            "9f9f351b.1ef9e"
-         ]
-      ]
-   },
-   {
-      "id":"f24456f4.9cdb1",
-      "type":"function",
-      "z":"4da7d783.603db8",
-      "name":"Test",
-      "func":"\nreturn  {\n    \"topic\": \"SIDVD\", payload: \"\"\n}",
-      "outputs":1,
-      "noerr":0,
-      "initialize":"",
-      "finalize":"",
-      "x":650,
-      "y":880,
-      "wires":[
-         [
-            "9f9f351b.1ef9e"
-         ]
-      ]
-   },
-   {
       "id":"f95baae.a83e958",
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"DYN Volume",
-      "func":"var MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\nvar SetMode = \"\"\n\nif (MyMode == \"HEAVY\")\n    SetMode = \"HEV\"\n    else\n    if (MyMode == \"MEDIUM\")\n        SetMode = \"MED\"\n    else\n        SetMode = \"LIT\"\nreturn  {\n    \"topic\": \"PSDYNVOL \"+SetMode , payload: \"\"\n}",
+      "func":"var MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\nvar SetMode = \"\"\n\nif (MyMode == \"HEAVY\")\n    SetMode = \"HEV\"\n    else\n    if (MyMode == \"MEDIUM\")\n        SetMode = \"MED\"\n    else\n        SetMode = \"LIT\"\nreturn  {\n    payload: \"PSDYNVOL \"+SetMode\n}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -717,7 +654,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"INFO",
-      "func":"\nreturn  {\n    \"topic\": \"MNINF\", payload: \"\"\n}",
+      "func":"\nreturn  {\n    payload: \"MNINF\"\n}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -735,7 +672,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"OPTION",
-      "func":"\nreturn  {\n    \"topic\": \"MNOPT\", payload: \"\"\n}",
+      "func":"\nreturn  {\n    payload: \"MNOPT\"\n}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -745,6 +682,59 @@
       "wires":[
          [
             "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"49a63dc0.670aac",
+      "type":"tcp request",
+      "z":"4da7d783.603db8",
+      "server":"",
+      "port":"",
+      "out":"sit",
+      "splitc":" ",
+      "name":"request",
+      "x":1100,
+      "y":300,
+      "wires":[
+         [
+            "bdf559a5.08bc68"
+         ]
+      ]
+   },
+   {
+      "id":"9d02f5ba.f07898",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"MUTE",
+      "func":"//MUTE TOGGLE\n// Set variable to identify that we are using \"smart programming\"\nflow.set(\"QueryMute\",\"1\"); // to store a variable\nvar MyCommand = \"MU?\"\nvar myip = msg.ip;\nreturn {\n    payload: MyCommand}",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":650,
+      "y":680,
+      "wires":[
+         [
+            "9f9f351b.1ef9e"
+         ]
+      ]
+   },
+   {
+      "id":"bdf559a5.08bc68",
+      "type":"function",
+      "z":"4da7d783.603db8",
+      "name":"Mute toggle",
+      "func":"var QueryIfThisIsMute =flow.get(\"QueryMute\") || 0;\nvar ThisIP =flow.get(\"ThisIP\") || 0;\nvar ThisPort =flow.get(\"ThisPort\") || 0;\nflow.set(\"QueryMute\",\"0\");\n\nvar Target = msg.payload.slice(0 , 4)\n\nif (QueryIfThisIsMute == \"1\") \n    if (Target == \"MUON\")  \n        return  {payload:\"MUOFF\\r\",host:ThisIP,port:ThisPort}\n    else    \n        return  {payload:\"MUON\\r\",host:ThisIP,port:ThisPort}\n",
+      "outputs":1,
+      "noerr":0,
+      "initialize":"",
+      "finalize":"",
+      "x":1110,
+      "y":380,
+      "wires":[
+         [
+            "49a63dc0.670aac"
          ]
       ]
    },
@@ -768,12 +758,5 @@
       "willTopic":"",
       "willQos":"0",
       "willPayload":""
-   },
-   {
-      "id":"6c3d7e97.97d678",
-      "type":"denon-controller",
-      "name":"",
-      "host":"192.168.1.130",
-      "port":"23"
    }
 ]
