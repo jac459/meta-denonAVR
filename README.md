@@ -9,16 +9,19 @@ Both files are supplied within this package in Github. The device driver can be 
 The Node-RED flow is populated with the most-used commands for Denon, but not all buttons are actually coded in it. Functions will/can be defined that handle buttons that are not yet in the Node-RED FLOW.   
 
 # Connectiviy
- The "external node" on the Denon AVR3808 will only connect successfully to your Denon if no other connection is running. Multiple connections don;t seem to be supported by the Denon firmware. 
+ The "external node" on the Denon AVR3808 (maybe this applies to all Denon-devices) will only connect successfully to your Denon if no other connection is running. Multiple connections don't seem to be supported by the Denon firmware. 
  
 # POWER ON and OFF
-This package can power on your Denon over HTTP if the Denon is keeping the network connection OPEN. Not all Denon-devices allow this, the ones tha do n eed to have this configured through he menu. 
-For devices that do not listen to HTTP when powered-off, we have included an infrared-POWER ON command.
+This package can power on your Denon over HTTP if the Denon is keeping the network connection OPEN.
 The POWER OFF command will put the Denon in standby mode, so it can be woken up by HTTP-commands.  
+
+# Autodiscovery 
+An attempt is made to make autodiscovery possible.
+Unfortunately, denon advertises itslef not really as clear as we would like. The most useable service tha we could find is "_heos-audio._tcp", which resolves to the denon. But if you have wireless heos-speakers, that might resolve his service to them as well... Therefore, autodiscovery will not yet be implemented until made fail-safe. 
 
 # Issues
 Currently, two issues exist:
-- MUTE Toggle is implemented as 2 buttons: MUTE ON and MUTE OFF as he serial interface of Denon does not support MUTE TOGGLE.
+- MUTE Toggle is implemented as 2 buttons: MUTE ON and MUTE OFF as he serial interface of Denon does not support MUTE TOGGLE. <=====  this one is fixed.
 - INPUT DVD doesn't seem to be recognized by the X8500H.... Looks like a bug in the Denon firmware.
 
 For this, you need to have:
