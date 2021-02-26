@@ -1,6 +1,6 @@
 {"name":"DenonAVR",
     "manufacturer":"Denon",
-    "version":6,
+    "version":7,
     "type":"AVRECEIVER",
     "variables":{
       "Volume":""    
