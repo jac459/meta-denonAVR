@@ -341,7 +341,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Menu",
-      "func":"var MyCommand = \"MN\" \n\n\nif (msg.button == \"BACK\" )  \n    MyCommand = \"MNRTN\"\nelse\n    MyCommand = \"MNMEN ON\"\nreturn {payload: MyCommand,payload: \"\"}",
+      "func":"var MyCommand = \"MN\" \n\n\nif (msg.button == \"BACK\" )  \n    MyCommand = \"MNRTN\"\nelse\n    MyCommand = \"MNMEN ON\"\nreturn {payload: MyCommand}",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -377,7 +377,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Surround",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\":\");\nvar MyMode = MyButton[1].toUpperCase()\n\nif (MyMode==\"DOLBYD\")\n    MyMode = \"DOLBY DIGITAL\"\nelse\nif (MyMode==\"DTS-SURR\")\n    MyMode = \"DTS SURROUND\"\n\nvar MyCommand = \"MS\"+MyMode \n\n\nreturn  {\n    payload: MyCommand,payload: \"\"\n}\n\n",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\":\");\nvar MyMode = MyButton[1].toUpperCase()\n\nif (MyMode==\"DOLBYD\")\n    MyMode = \"DOLBY DIGITAL\"\nelse\nif (MyMode==\"DTS-SURR\")\n    MyMode = \"DTS SURROUND\"\n\nvar MyCommand = \"MS\"+MyMode \n\n\nreturn  {\n    payload: MyCommand\n}\n\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -449,7 +449,7 @@
       "type":"function",
       "z":"4da7d783.603db8",
       "name":"Picture",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\nif (MyMode==\"Standard\")\n    MyMode=\"std\"\nelse\nif (MyMode==\"Movie\")\n    MyMode=\"MOV\"\nelse\nif (MyMode==\"Vivid\")\n    MyMode=\"VVD\"\nelse\nif (MyMode==\"Stream\")\n    MyMode=\"STM\"\nelse\nif (MyMode==\"Custom\")\n    MyMode=\"CTM\"\nelse\nif (MyMode==\"ISF Day\")\n    MyMode=\"DAY\"\nelse\nif (MyMode==\"ISF NIGHT\")\n    MyMode=\"NGT\"\n\nvar MyCommand = \"PV\"+MyMode \n\nreturn {\n    payload: MyCommand}\nSTD\nMOV\nVVD\nSTM\nCTM\nDAY\nNGT",
+      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\nif (MyMode==\"Standard\")\n    MyMode=\"std\"\nelse\nif (MyMode==\"Movie\")\n    MyMode=\"MOV\"\nelse\nif (MyMode==\"Vivid\")\n    MyMode=\"VVD\"\nelse\nif (MyMode==\"Stream\")\n    MyMode=\"STM\"\nelse\nif (MyMode==\"Custom\")\n    MyMode=\"CTM\"\nelse\nif (MyMode==\"ISF Day\")\n    MyMode=\"DAY\"\nelse\nif (MyMode==\"ISF NIGHT\")\n    MyMode=\"NGT\"\n\nvar MyCommand = \"PV\"+MyMode \n\nreturn {\n    payload: MyCommand}\n",
       "outputs":1,
       "noerr":0,
       "initialize":"",
@@ -553,24 +553,6 @@
       ]
    },
    {
-      "id":"af93eb09.8df4a8",
-      "type":"function",
-      "z":"4da7d783.603db8",
-      "name":"Tuner HD Preset",
-      "func":"//var MyMode=msg.button.slice(7,99)\nvar MyButton = msg.button.split(\" \");\nvar MyMode = MyButton[1].toUpperCase()\n\n\nvar MyCommand = \"TPHD\"+MyMode \n\nreturn {\n    payload: MyCommand}\n\n\n",
-      "outputs":1,
-      "noerr":0,
-      "initialize":"",
-      "finalize":"",
-      "x":680,
-      "y":513,
-      "wires":[
-         [
-            "9f9f351b.1ef9e"
-         ]
-      ]
-   },
-   {
       "id":"410b5176.efedb8",
       "type":"function",
       "z":"4da7d783.603db8",
@@ -592,7 +574,7 @@
       "id":"2d2f33bb.2f6f2c",
       "type":"inject",
       "z":"4da7d783.603db8",
-      "name":"manual request",
+      "name":"Power on manually",
       "props":[
          {
             "p":"topic",
@@ -603,9 +585,9 @@
       "crontab":"",
       "once":false,
       "onceDelay":0.1,
-      "topic":"meta/DenonAVR/192.168.1.130:23/button/MUTE",
+      "topic":"meta/DenonAVR/default/button/POWER ON",
       "payloadType":"str",
-      "x":160,
+      "x":170,
       "y":420,
       "wires":[
          [
@@ -739,9 +721,57 @@
       ]
    },
    {
+      "id":"7cc434b2.a51c54",
+      "type":"inject",
+      "z":"4da7d783.603db8",
+      "name":"manual request",
+      "props":[
+         {
+            "p":"topic",
+            "vt":"str"
+         }
+      ],
+      "repeat":"",
+      "crontab":"",
+      "once":false,
+      "onceDelay":0.1,
+      "topic":"meta/DenonAVR/default/button/VOLUME UP",
+      "x":160,
+      "y":500,
+      "wires":[
+         [
+            "b60e073f.09824"
+         ]
+      ]
+   },
+   {
+      "id":"3f290a4a.c29d0e",
+      "type":"inject",
+      "z":"4da7d783.603db8",
+      "name":"Power off manually",
+      "props":[
+         {
+            "p":"topic",
+            "vt":"str"
+         }
+      ],
+      "repeat":"",
+      "crontab":"",
+      "once":false,
+      "onceDelay":0.1,
+      "topic":"meta/DenonAVR/default/button/POWER OFF",
+      "x":170,
+      "y":460,
+      "wires":[
+         [
+            "b60e073f.09824"
+         ]
+      ]
+   },
+   {
       "id":"920bfa37.0c7b9",
       "type":"mqtt-broker",
-      "name":"Prod neeo brain",
+      "name":"Spare neeo brain",
       "broker":"127.0.0.1",
       "port":"1883",
       "clientid":"",
