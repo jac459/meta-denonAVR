@@ -1,6 +1,6 @@
 {"name":"DenonAVR",
     "manufacturer":"Denon",
-    "version":8,
+    "version":9,
     "type":"AVRECEIVER",
     "variables":{
       "Volume":""    
@@ -130,6 +130,7 @@
        "DIMMER": {"label":"", "type":"static", "command":""},  
        "VOLUME UP": {"label":"", "type":"static", "command":""},
        "VOLUME DOWN": {"label":"", "type":"static", "command":""},
+       "MUTE TOGGLE": {"label":"", "type":"static", "command":""},
        "MUTE": {"label":"", "type":"static", "command":""}
     }
   }
