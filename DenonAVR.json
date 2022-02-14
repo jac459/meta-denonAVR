@@ -131,7 +131,7 @@
         "CURSOR ENTER":       {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?MNENT"},
         "MENU":               {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?MNMEN ON"},
         "BACK":               {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?MNRTN"},
-	"ECOMODE ON":         {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?ECOON"},
+        "ECOMODE ON":         {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?ECOON"},
         "ECOMODE AUTO":       {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?ECOAUTO"},
         "ECOMODE OFF":        {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?ECOOFF"},
         "INPUT BD":           {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?SIBD"},
