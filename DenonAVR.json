@@ -165,6 +165,9 @@
         "SUR:PURE DIRECT":    {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?MSPURE DIRECT"},
         "SUR:STEREO":         {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?MSSTEREO"},
         "SUR:AUTO":           {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?MSAUTO"},
+        "ECO ON":             {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?ECOON"},
+        "ECO OFF":            {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?ECOOFF"},
+	"ECO AUTO":           {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?ECOAUTO"},    
         "__VOLUMESET":        {"label":"", "type":"http-get", "command":"DYNAMIK \"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?MV\" + (\"0\" + Math.round(98*Number($MainVolumePercent)/100).toString() ).slice(-2)"},
 
         "POWER Z2 ON":        {"label":"", "type":"http-get", "command":"http://$DenonURI:$DenonPort/goform/formiPhoneAppDirect.xml?Z2ON",      "evaldo":[{"test":true, "then":"__INITIALISE", "or":""}]},
