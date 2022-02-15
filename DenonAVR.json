@@ -1,7 +1,7 @@
 {   "name":"DenonMarantzAVR",
     "manufacturer":"DenonMarantz",
     "type":"AVRECEIVER",
-    "version":8,
+    "version":9,
     "compatible-meta":"1.0.4",
     "persistedvariables":{
         "MyDevices": "[]",
@@ -39,7 +39,7 @@
             "evalwrite":[
                 {"variable":"BrandCode",    "value":"DYNAMIK \"bc\"+JSON.parse(\"$Result\").BrandCode[0]"},
                 {"variable":"NewDevice",    "value":"DYNAMIK let device = $NewDevice; device.model_name = JSON.parse(\"$Result\").ModelName[0]; let bl=$BrandList; let b=bl.$BrandCode; device.brand = (b!=undefined?b:\"Unknown Brand\"); JSON.stringify(device); "},
-				{"variable":"MyDevices",    "value":"DYNAMIK let device = $NewDevice; let mydevices = $MyDevices; ((mydevices.findIndex(i=>i.ip==device.ip)==-1) ? mydevices.push(device) : mydevices); JSON.stringify(mydevices); "}
+				{"variable":"MyDevices",    "value":"DYNAMIK let device = $NewDevice; let mydevices = $MyDevices; (device.model_name != undefined ? ((mydevices.findIndex(i=>i.ip==device.ip)==-1) ? mydevices.push(device) : mydevices) : mydevices); JSON.stringify(mydevices); "} 
             ],			
 			"evaldo":[{"test":"DYNAMIK let device = $NewDevice; device.model_name != undefined","then":"__PERSIST", "or":""}]}
         ],
